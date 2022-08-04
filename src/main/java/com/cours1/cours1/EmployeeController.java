@@ -1,5 +1,6 @@
 package com.cours1.cours1;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,20 +21,26 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public Employee addEmployee(@RequestParam(name = "nameEmployee") String nameEmployee, @RequestParam(name = "surnameEmployee") String surnameEmployee) {
-        Employee employee = new Employee(nameEmployee, surnameEmployee);
-        return employeeService.addEmployee(employee);
+        if(StringUtils.isAlpha(nameEmployee)&&StringUtils.isAlpha(surnameEmployee)){
+            Employee employee = new Employee(nameEmployee, surnameEmployee);
+            return employeeService.addEmployee(employee);}
+        throw new EmployeeNotFoundException();
     }
 
     @GetMapping(path = "/remove")
     public Employee deleteEmployee(@RequestParam(name = "nameEmployee") String nameEmployee, @RequestParam(name = "surnameEmployee") String surnameEmployee) {
+        if(StringUtils.isAlpha(nameEmployee)&&StringUtils.isAlpha(surnameEmployee)){
         Employee employee = new Employee(nameEmployee, surnameEmployee);
-        return employeeService.deleteEmployee(employee);
+        return employeeService.deleteEmployee(employee);}
+        throw new EmployeeNotFoundException();
     }
 
     @GetMapping(path = "/find")
     public Employee findEmployee(@RequestParam(name = "nameEmployee") String nameEmployee, @RequestParam(name = "surnameEmployee") String surnameEmployee) {
+        if(StringUtils.isAlpha(nameEmployee)&&StringUtils.isAlpha(surnameEmployee)){
         Employee employee = new Employee(nameEmployee, surnameEmployee);
-        return employeeService.findEmployee(employee);
+        return employeeService.findEmployee(employee);}
+        throw new EmployeeNotFoundException();
     }
 
     @GetMapping(path = "/all")

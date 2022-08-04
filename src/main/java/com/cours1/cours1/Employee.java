@@ -1,5 +1,7 @@
 package com.cours1.cours1;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -17,8 +19,8 @@ public class Employee {
     }
 
     public Employee(String nameEmployee, String surnameEmployee) {
-        this.nameEmployee = nameEmployee;
-        this.surnameEmployee = surnameEmployee;
+        this.nameEmployee = StringUtils.capitalize(nameEmployee.toLowerCase());;
+        StringUtils.capitalize(surnameEmployee.toLowerCase());
     }
 
     public String getNameEmployee() {
