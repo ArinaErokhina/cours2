@@ -6,51 +6,47 @@ import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    public List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Иван", "Федоров", 3, 56000),
-            new Employee("Алина", "Смирнова", 2, 70000),
-            new Employee("Егор", "Прохоров", 3, 69000),
-            new Employee("Роман", "Григорьев", 4, 75000),
-            new Employee("Вера", "Кузнецова", 3, 80000),
-            new Employee("Максим", "Сидоров", 5, 100000),
-            new Employee("Андрей", "Васильев", 1, 85000),
-            new Employee("Валерия", "Коровина", 2, 98000),
-            new Employee("Иван", "Серков", 4, 45000),
-            new Employee("Дмитрий", "Дробков", 1, 77000)
-    ));
-    private static int maxEmployeeCount = 11;
+    private static Map<String, Employee> employees = new HashMap<>();
+    private static int maxEmployeeCount = 2;
 
     public Employee addEmployee(Employee employee) {
+        if (employee.getNameEmployee() == null || employee.getSurnameEmployee() == null) {
+            throw new EmployeeDataEnteredIncorrectlyException();
+        }
         if (maxEmployeeCount == employees.size()) {
             throw new EmployeeStorageIsFullException();
         }
-        for (int i = 0; i < employees.size(); i++) {
-            if (employee.equals(employees.get(i))) {
-                throw new EmployeeAlreadyAddedException();
-            }
+        if (employees.containsKey(employee.getNameEmployee()+employee.getSurnameEmployee())) {
+            throw new EmployeeAlreadyAddedException();
         }
-        employees.add(employee);
+        employees.put(employee.getNameEmployee()+employee.getSurnameEmployee(), employee);
         return employee;
     }
 
     public Employee deleteEmployee(Employee employee) {
-        for (int i = 0; i < employees.size(); i++) {
-            if (employee.equals(employees.get(i)))
-                return employees.remove(i);
+        if (employee.getNameEmployee() == null || employee.getSurnameEmployee() == null) {
+            throw new EmployeeDataEnteredIncorrectlyException();
         }
+        if (employees.containsKey(employee.getNameEmployee()+employee.getSurnameEmployee()))
+            return employees.remove(employee.getNameEmployee()+employee.getSurnameEmployee());
+
         throw new EmployeeNotFoundException();
     }
 
     public Employee findEmployee(Employee employee) {
-        for (int i = 0; i < employees.size(); i++) {
-            if (employee.equals(employees.get(i))) {
-                return employees.get(i);
-            }
+        if (employee.getNameEmployee() == null || employee.getSurnameEmployee() == null) {
+            throw new EmployeeDataEnteredIncorrectlyException();
         }
+        if (employees.containsKey(employee.getNameEmployee()+employee.getSurnameEmployee())) {
+            return employees.get(employee.getNameEmployee()+employee.getSurnameEmployee());
+       }
+
         throw new EmployeeNotFoundException();
     }
 
-    public List<Employee> allEmployee() {
-        return employees;
+    public Collection<Employee> allEmployee() {
+        return Collections.unmodifiableCollection(employees.values());
     }
+
+
 }

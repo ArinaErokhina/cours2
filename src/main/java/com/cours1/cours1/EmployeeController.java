@@ -37,7 +37,7 @@ public class EmployeeController {
 
     @GetMapping(path = "/find")
     public Employee findEmployee(@RequestParam(name = "nameEmployee") String nameEmployee, @RequestParam(name = "surnameEmployee") String surnameEmployee) {
-        if(StringUtils.isAlpha(nameEmployee)&&StringUtils.isAlpha(surnameEmployee)){
+        if(StringUtils.isAlpha(nameEmployee) && StringUtils.isAlpha(surnameEmployee)){
         Employee employee = new Employee(nameEmployee, surnameEmployee);
         return employeeService.findEmployee(employee);}
         throw new EmployeeNotFoundException();

@@ -1,6 +1,7 @@
 package com.cours1.cours1;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -20,7 +21,7 @@ public class Employee {
 
     public Employee(String nameEmployee, String surnameEmployee) {
         this.nameEmployee = StringUtils.capitalize(nameEmployee.toLowerCase());;
-        StringUtils.capitalize(surnameEmployee.toLowerCase());
+        this.surnameEmployee = StringUtils.capitalize(surnameEmployee.toLowerCase());
     }
 
     public String getNameEmployee() {
